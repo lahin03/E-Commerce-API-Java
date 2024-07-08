@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -46,8 +47,8 @@ public class Product {
 	 @Column(name = "brand")
 	 private String brand;
 	 
-	 @Column(name = "colour")
-	 private String colour;
+	 @Column(name = "color")
+	 private String color;
 	 
 	 @Embedded
 	 @ElementCollection
@@ -55,13 +56,14 @@ public class Product {
 	 private Set<Size> sizes = new HashSet<>();
 	 
 	 @Column(name = "image_url")
+	 @Nullable
 	 private String imageUrl;
 	 
 	 @OneToMany(mappedBy = "product",cascade=CascadeType.ALL,orphanRemoval = true)
 	 private List<Rating>ratings = new ArrayList<>();
 	 
 	 @OneToMany(mappedBy = "product",cascade=CascadeType.ALL,orphanRemoval = true)
-	 private List<Review>reviwes = new ArrayList<>();
+	 private List<Review>reviews = new ArrayList<>();
 	 
 	 @Column(name = "num_ratings")
 	 private int numRatings;
@@ -170,14 +172,14 @@ public class Product {
 
 
 
-	public String getColour() {
-		return colour;
+	public String getColor() {
+		return color;
 	}
 
 
 
-	public void setColour(String colour) {
-		this.colour = colour;
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 
@@ -219,13 +221,13 @@ public class Product {
 
 
 	public List<Review> getReviwes() {
-		return reviwes;
+		return reviews;
 	}
 
 
 
-	public void setReviwes(List<Review> reviwes) {
-		this.reviwes = reviwes;
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
 	}
 
 
@@ -267,7 +269,7 @@ public class Product {
 
 
 	public Product(long id, String title, String description, int price, int discountedPrice, int discountPercent,
-			int quantity, String brand, String colour, Set<Size> sizes, String imageUrl, List<Rating> ratings,
+			int quantity, String brand, String color, Set<Size> sizes, String imageUrl, List<Rating> ratings,
 			List<Review> reviwes, int numRatings, Category category, LocalDateTime createdAt) {
 		super();
 		this.id = id;
@@ -278,11 +280,11 @@ public class Product {
 		this.discountPercent = discountPercent;
 		this.quantity = quantity;
 		this.brand = brand;
-		this.colour = colour;
+		this.color = color;
 		this.sizes = sizes;
 		this.imageUrl = imageUrl;
 		this.ratings = ratings;
-		this.reviwes = reviwes;
+		this.reviews = reviews;
 		this.numRatings = numRatings;
 		this.category = category;
 		this.createdAt = createdAt;
@@ -290,7 +292,7 @@ public class Product {
 
 
 
-	private Product() {
+	public Product() {
 		 
 	 }
 }

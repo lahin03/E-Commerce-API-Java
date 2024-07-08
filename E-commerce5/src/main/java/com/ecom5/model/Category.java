@@ -18,7 +18,6 @@ public class Category {
 	private long id;
 	
 	@NotNull
-	@Max(50)
 	private String name;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -59,7 +58,7 @@ public class Category {
 		this.level = level;
 	}
 
-	public Category(long id, @NotNull @Max(50) String name, Category parentCategory, int level) {
+	public Category(long id, @NotNull  String name, Category parentCategory, int level) {
 		super();
 		this.id = id;
 		this.name = name;

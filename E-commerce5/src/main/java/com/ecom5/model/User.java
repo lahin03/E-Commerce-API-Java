@@ -1,21 +1,32 @@
 package com.ecom5.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumns;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 
@@ -24,7 +35,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 	
 	private String firstName;
 	
@@ -34,7 +45,18 @@ public class User {
 	
 	private String email;
 	
-	private String role;
+	private LocalDateTime createdAt;
+	
+	@Column
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
+	public Collection<? extends GrantedAuthority> getAuthorities(){
+		
+		SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role.toString());
+		
+		return List.of(simpleGrantedAuthority);
+	}
 	
 	private String mobile;
 	
@@ -54,17 +76,14 @@ public class User {
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
 	private List<Review>reviews = new ArrayList<>();
 	
-	private LocalDateTime createdAt;
-	
-	
-	
-	public long getId() {
+
+	public Long getId() {
 		return id;
 	}
 
 
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -118,15 +137,13 @@ public class User {
 
 
 
-	public String getRole() {
-		return role;
-	}
+	public Role getRole() {
+        return role;
+    }
 
-
-
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
 
 
@@ -202,7 +219,7 @@ public class User {
 
 
 
-	public User(long id, String firstName, String lastName, String password, String email, String role, String mobile,
+	public User(Long id, String firstName, String lastName, String password, String email, Role role, String mobile,
 			List<Address> address, List<PaymentInformation> paymentInformation, List<Rating> ratings,
 			List<Review> reviews, LocalDateTime createdAt) {
 		super();

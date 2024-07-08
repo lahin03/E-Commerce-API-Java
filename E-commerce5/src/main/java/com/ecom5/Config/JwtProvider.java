@@ -19,6 +19,7 @@ public class JwtProvider {
 				.issuedAt(new Date())
 				.setExpiration((new Date((new Date()).getTime() + 3600000)))
 				.claim("email",auth.getName())
+				.claim("role", auth.getAuthorities())
 				.signWith(key).compact();
 		
 		return jwt;
@@ -34,4 +35,3 @@ public class JwtProvider {
 		return email;
 	}
 }
-

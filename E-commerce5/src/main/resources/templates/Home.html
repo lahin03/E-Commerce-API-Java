@@ -6,11 +6,11 @@
 </head>
 <body>
 	<h1>Home Page</h1><br>
-	<form action="#" th:action="@{/signup}" method="Post">
-    	<button class="button" type="submit">Signup</button>
-    </form>
-    <form action="#" th:action="@{/signin}" method="Post">
-    	<button class="button" type="submit">Signin</button>
+	<form action="#" th:action="@{/home/userDashboard}" method="Post">
+    	<button class="button" type="submit">User Dashboard</button>
+    </form><br>
+    <form action="#" th:action="@{/home/adminDashboard}" method="Post">
+    	<button class="button" type="submit">Admin Dashboard</button>
     </form>
 </body>
 </html>
