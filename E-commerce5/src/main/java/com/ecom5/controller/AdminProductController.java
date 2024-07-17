@@ -39,7 +39,7 @@ public class AdminProductController {
 	public ResponseEntity<ApiResponse>deleteProduct(@PathVariable Long ProductId)
 			throws ProductException{
 		
-		productService.deleteProduct(ProductId);
+		productService.deleteProduct(ProductId);   
 		
 		ApiResponse res = new ApiResponse();
 		res.setMessage("product deleted successfully");
