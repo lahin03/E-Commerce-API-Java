@@ -40,6 +40,7 @@ public class AppConfig {
                 //.requestMatchers("/api/admin/products/**").permitAll()
                 .requestMatchers("/api/authtest/user_endpoint").hasRole("USER")
                 .requestMatchers("/api/authtest/admin_endpoint").hasRole("ADMIN")
+                //.requestMatchers("/api/admin/products/**").hasRole("ADMIN")
                 .anyRequest().authenticated() 
             .and()
             .addFilterBefore(jwtValidator(), UsernamePasswordAuthenticationFilter.class)
@@ -50,7 +51,7 @@ public class AppConfig {
             .and()
             .formLogin();
 
-        return http.build();
+        return http.build(); 
     }
 
     @Bean

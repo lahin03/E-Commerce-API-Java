@@ -37,12 +37,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 	
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 	
 	private String password;
 	
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
 	private LocalDateTime createdAt;
@@ -58,6 +61,7 @@ public class User {
 		return List.of(simpleGrantedAuthority);
 	}
 	
+	@Column(name  = "mobile", nullable = true)
 	private String mobile;
 	
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)

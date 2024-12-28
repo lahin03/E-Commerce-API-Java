@@ -3,6 +3,7 @@ package com.ecom5.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecom5.exception.ProductException;
@@ -49,13 +51,37 @@ public class AdminProductController {
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<Product>>findAllProduct(){
-		
-		List<Product>products = (List<Product>) productService.getAllProduct(null,
-				null, null, null, null, null, null, null, null, null);
-		
-		return new ResponseEntity<>(products, HttpStatus.OK);
-	}
+    public ResponseEntity<Page<Product>> findAllProduct(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) List<String> colors,
+            @RequestParam(required = false) List<String> size,
+            @RequestParam(required = false, defaultValue = "0") Integer minPrice,
+            @RequestParam(required = false, defaultValue = "1000000") Integer maxPrice,
+            @RequestParam(required = false, defaultValue = "0") Integer minDiscount,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) String stock,
+            @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+
+        if (minPrice > maxPrice) {
+            throw new IllegalArgumentException("Minimum price cannot be greater than maximum price");
+        }
+
+        Page<Product> products = productService.getAllProduct(
+                category,
+                colors,
+                size,
+                minPrice,
+                maxPrice,
+                minDiscount,
+                sort,
+                stock,
+                pageNumber,
+                pageSize);
+
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
 	
 	@PutMapping("/{productId}/update")
 	public ResponseEntity<Product>updateProduct(@RequestBody Product req,

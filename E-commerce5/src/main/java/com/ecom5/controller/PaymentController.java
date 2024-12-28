@@ -1,4 +1,4 @@
-package com.ecom5.controller;
+/*package com.ecom5.controller;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,4 +109,4 @@ public class PaymentController {
 			throw new RazorpayException(e.getMessage());
 		}
 	}
-}
+}*/

@@ -64,6 +64,7 @@ public class AuthController {
 		User isEmailExist = userRepository.findByEmail(email);
 		
 		if(isEmailExist!=null) {
+			System.out.println("\n\n\n" + isEmailExist + "\n\n\n");
 			throw new UserException("Email is Already Used With Another Account");
 		}
 		
@@ -73,6 +74,7 @@ public class AuthController {
 		createdUser.setFirstName(firstname);
 		createdUser.setLastName(lastname);
 		createdUser.setRole(Role.USER);
+		
 		
 		User savedUser = userRepository.save(createdUser);
 		
@@ -135,12 +137,15 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<AuthResponse>loginUserHandler(@RequestBody LoginRequest loginRequest){
 		
-		String username = loginRequest.getEmail();
+		String email = loginRequest.getEmail();
 		String password = loginRequest.getPassword();
 		
-		User user = userRepository.findByEmail(username);
+		System.out.println("\n\n" + email + "\n\n");
 		
-		Authentication authentication = authenticate(username,password,AuthorityUtils.createAuthorityList(user.getRole().toString()));
+		User user = userRepository.findByEmail(email);
+	
+		
+		Authentication authentication = authenticate(email,password,AuthorityUtils.createAuthorityList(user.getRole().toString()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		
@@ -154,9 +159,9 @@ public class AuthController {
 		return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.CREATED);
 	}
 	
-	private Authentication authenticate(String username,String password, List<GrantedAuthority> list) {
+	private Authentication authenticate(String email,String password, List<GrantedAuthority> list) {
 		
-				User user = userRepository.findByEmail(username);
+				User user = userRepository.findByEmail(email);
 		
 				if(user==null) {
 					throw new BadCredentialsException("invalid Username");
