@@ -140,7 +140,6 @@ public class AuthController {
 		String email = loginRequest.getEmail();
 		String password = loginRequest.getPassword();
 		
-		System.out.println("\n\n" + email + "\n\n");
 		
 		User user = userRepository.findByEmail(email);
 	
