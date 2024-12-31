@@ -50,8 +50,9 @@ public class AdminProductController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
+	//function to get all products
 	@GetMapping("/all")
-    public ResponseEntity<Page<Product>> findAllProduct(
+    public ResponseEntity<Page<Product>> findAllProduct( 
             @RequestParam(required = false) String category,
             @RequestParam(required = false) List<String> colors,
             @RequestParam(required = false) List<String> size,
